@@ -167,11 +167,13 @@ npm run build
 
 ### Vercel + managed PostgreSQL
 
-1. Create a PostgreSQL database on Render, Neon, Supabase or another managed provider.
-2. Import the repository into Vercel as a Next.js project.
-3. Add `DATABASE_URL` and a strong `JWT_SECRET` as environment variables.
-4. Run `npx drizzle-kit push` and `npx tsx scripts/seed.ts` against the production database once.
-5. Deploy. Vercel serves the React frontend and Node.js route handlers together.
+1. Create a PostgreSQL database with a managed provider such as Neon or Supabase. Copy its connection string; do not use a local `localhost` URL.
+2. In Vercel, import `maryamurooj56-creator/Hospital-Managment` and keep the detected Next.js framework and default build settings.
+3. Add `DATABASE_URL` (the provider's connection string) and `JWT_SECRET` (a unique random secret) to the Vercel project's Production environment variables. Add them to Preview and Development too if those deployments need the database.
+4. Before deploying, set `DATABASE_URL` in your local `.env` to the production database URL and run `npx drizzle-kit push` to create/update the schema. Keep `.env` private and never commit it.
+5. Deploy from Vercel. Future pushes to `main` will trigger deployments automatically.
+
+Do not run the demo seed script against a public production deployment: its demo accounts use a published shared password. The demo data and credentials are for local testing only. Never enter real patient information into this demonstrator without a separate production security and privacy review.
 
 ### Render
 
